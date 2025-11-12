@@ -14,6 +14,7 @@ const Navbar = () => {
     const links = <>
         <li><NavLink className='hover:bg-yellow-200 hover:text-black' to="/">Home</NavLink></li>
         <li><NavLink className='hover:bg-yellow-200 hover:text-black' to="/allProducts">All Products</NavLink></li>
+        <li><NavLink className='hover:bg-yellow-200 hover:text-black' to="/allProducts">My Collection</NavLink></li>
         {
             // user && <>
             //     <li><NavLink to="/myProducts">My Products</NavLink></li>
@@ -36,7 +37,7 @@ const Navbar = () => {
                         {links}
                     </ul>
                 </div>
-                <h1 className="btn btn-ghost text-xl">Movie<span>Master</span></h1>
+                <h1 className="ghost text-xl">Movie<span>Master</span></h1>
             </div>
             <div className="navbar-center hidden lg:flex">
                 <ul className="menu menu-horizontal px-1">

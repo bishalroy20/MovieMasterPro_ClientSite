@@ -1,9 +1,17 @@
 import React from "react";
+import Description from "./Description";
+import Featured_movies from './Featured_movies'
+import TopRated from "./TopRated";
 
 const Home = () => {
   
   return <div>
-    <h1>this is homepage</h1>
+    <Description></Description>
+    <Featured_movies></Featured_movies>
+
+    <TopRated></TopRated>
+
+
   </div>;
 };
 
