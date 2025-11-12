@@ -9,6 +9,7 @@ import RootLayout from './Layout/RootLayout.jsx';
 import AuthProvider from './Contexts/AuthProvider.jsx';
 import Register from './Components/Home/Register.jsx';
 import Login from './Components/Home/Login.jsx';
+import Profile from './Components/Profile/Profile.jsx';
 
 
 const router = createBrowserRouter([
@@ -27,7 +28,12 @@ const router = createBrowserRouter([
       {
         path : '/login',
         Component : Login
+      },
+      {
+        path : '/profile',
+        Component : Profile
       }
+      
 
       
     ]
