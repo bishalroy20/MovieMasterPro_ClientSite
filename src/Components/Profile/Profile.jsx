@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import { AuthContext } from '../../contexts/AuthContext';
+import { Link } from 'react-router';
 
 const Profile = () => {
   const { user } = useContext(AuthContext);
@@ -29,11 +30,15 @@ const Profile = () => {
           <h3 className="text-lg font-semibold">Account Details</h3>
           <ul className="text-sm mt-2 space-y-1">
             <li><strong>UID:</strong> {user.uid}</li>
+            <li><strong>Email:</strong> {user.email ? user.email : 'Unknown'}</li>
             <li><strong>Email Verified:</strong> {user.emailVerified ? 'Yes' : 'No'}</li>
             <li><strong>Provider:</strong> {user.providerData[0]?.providerId}</li>
           </ul>
         </div>
       </div>
+      <Link to="/movies/add" className="btn btn-outline">
+            Add Movie
+          </Link>
     </div>
   );
 };

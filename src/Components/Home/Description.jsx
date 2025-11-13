@@ -12,10 +12,10 @@ const Description = () => {
           our curated collection is designed to inspire, entertain, and elevate your movie experience.
         </p>
         <div className="flex justify-center gap-4">
-          <Link to="/allmovies" className="btn btn-outline">
+          <Link to="/movies" className="btn btn-outline">
             View All Movies
           </Link>
-          <Link to="/genres" className="btn btn-outline">
+          <Link to="" className="btn btn-outline">
             Explore Genres
           </Link>
         </div>

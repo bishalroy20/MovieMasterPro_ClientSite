@@ -19,6 +19,7 @@ const Login = () => {
     setLoading(true);
     signInUser(formData.email, formData.password)
       .then(result => {
+        
         toast.success('Login successful!');
         setLoading(false);
         navigate('/profile');
@@ -33,6 +34,7 @@ const Login = () => {
     setLoading(true);
     signInWithGoogle()
       .then(result => {
+        
         toast.success('Logged in with Google!');
         setLoading(false);
         navigate('/profile');

@@ -1,26 +1,30 @@
 import React, { use } from 'react';
-import { Link, NavLink } from 'react-router';
+import { Link, Navigate, NavLink } from 'react-router';
 import { AuthContext } from '../../contexts/AuthContext';
+import { toast } from 'react-toastify';
 
 const Navbar = () => {
     const { user, signOutUser } = use(AuthContext);
 
     const handleSignOut = () => {
         signOutUser()
-            .then()
-            .catch()
-    }
+            .then(() => {
+            localStorage.removeItem('token');
+            localStorage.removeItem('userEmail');
+            toast.success('Signed out successfully!');
+            Navigate('/login'); // redirect to login page
+            })
+            .catch(err => {
+            toast.error('Sign out failed. Please try again.');
+            console.error(err);
+            });
+        };      
 
     const links = <>
         <li><NavLink className='hover:bg-yellow-200 hover:text-black' to="/">Home</NavLink></li>
-        <li><NavLink className='hover:bg-yellow-200 hover:text-black' to="/allProducts">All Products</NavLink></li>
-        <li><NavLink className='hover:bg-yellow-200 hover:text-black' to="/allProducts">My Collection</NavLink></li>
-        {
-            // user && <>
-            //     <li><NavLink to="/myProducts">My Products</NavLink></li>
-            //     <li><NavLink to="/myBids">My Bids</NavLink></li>
-            // </>
-        }
+        <li><NavLink className='hover:bg-yellow-200 hover:text-black' to="/movies">All Movies</NavLink></li>
+        <li><NavLink className='hover:bg-yellow-200 hover:text-black' to="/movies/my-collection">My Collection</NavLink></li>
+        
 
     </>
 

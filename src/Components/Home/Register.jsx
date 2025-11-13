@@ -55,6 +55,7 @@ const Register = () => {
       toast.success('Profile created successfully!');
       setFormData({ username: '', photoURL: '', email: '', password: '' }); 
       setLoading(false);
+    
       navigate('/profile'); 
     } catch (err) {
       toast.error(err.message);
