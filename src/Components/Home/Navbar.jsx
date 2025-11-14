@@ -4,8 +4,10 @@ import { AuthContext } from '../../contexts/AuthContext';
 import { toast, ToastContainer } from 'react-toastify';
 
 
+
 const Navbar = () => {
     const { user, signOutUser } = use(AuthContext);
+
 
     const handleSignOut = () => {
         signOutUser()
@@ -51,6 +53,12 @@ const Navbar = () => {
                 </ul>
             </div>
             <div className="navbar-end">
+
+                
+
+               
+
+
                 {user ? (
                 <div className="flex items-center gap-4">
                     <div className="dropdown dropdown-end">
