@@ -54,10 +54,10 @@ export default function WatchList() {
               <h2 className="text-lg font-bold mt-2">{item.movie.title}</h2>
 
               <Link
-                to={`/movies/details/${item.movie.movieId}`}
-                className="text-blue-400 block mt-1"
+                to={`/movies/${item.movie._id}`}
+                className="inline-block mt-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded text-white font-semibold"
               >
-                View Details →
+                Details
               </Link>
 
               <button
