@@ -16,6 +16,8 @@ import MyCollection from './Components/AllMovies/MyCollection.jsx';
 import UpdateMovie from './Components/AllMovies/UpdateMovie.jsx';
 import AllMovies from './Components/AllMovies/AllMovies.jsx';
 import PublicRoute from './Layout/PublicRoute.jsx';
+import ErrorPage from './Layout/ErrorPage.jsx';
+import WatchList from './Components/AllMovies/WatchList.jsx';
 
 
 
@@ -23,10 +25,12 @@ const router = createBrowserRouter([
   {
     path: '/',
     element: <RootLayout />,
+    errorElement : <ErrorPage />,
     children: [
       { index: true, element: <Home /> },
       { path: 'movies', element: <AllMovies /> },
       { path: 'movies/:id', element: <MovieDetails /> },
+      
       {
         element: <PublicRoute />,
         children: [
@@ -35,7 +39,7 @@ const router = createBrowserRouter([
         ],
       },
 
-      // 🔐 Private Routes (only accessible if logged in)
+      
       {
         element: <PrivateRoute />,
         children: [
@@ -43,8 +47,14 @@ const router = createBrowserRouter([
           { path: 'movies/add', element: <AddMovie /> },
           { path: 'movies/my-collection', element: <MyCollection /> },
           { path: 'movies/update/:id', element: <UpdateMovie /> },
+          { path: 'movies/watchList' , element: <WatchList />}
+          
         ],
       },
+      {
+        path : '*' ,
+        Component : <ErrorPage />
+      }
     ],
   },
 ]);

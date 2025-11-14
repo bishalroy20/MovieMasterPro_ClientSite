@@ -15,9 +15,7 @@ const Description = () => {
           <Link to="/movies" className="btn btn-outline">
             View All Movies
           </Link>
-          <Link to="" className="btn btn-outline">
-            Explore Genres
-          </Link>
+          
         </div>
       </div>
     </section>

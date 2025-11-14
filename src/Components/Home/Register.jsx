@@ -80,8 +80,20 @@ const Register = () => {
     };
 
   return (
-    <div className="card bg-base-100 mx-auto w-full max-w-sm shadow-2xl py-6 px-4">
-      <ToastContainer />
+    <div className='bg-gradient-to-r from-gray-900 via-black to-gray-800'>
+      <ToastContainer 
+        position="top-right"
+        autoClose={3000} 
+        hideProgressBar={false} 
+        newestOnTop={false} 
+        closeOnClick
+        rtl={false} 
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
+    <div className="card bg-gray-100 mx-auto w-full max-w-sm shadow-2xl py-6 px-4">
+    
       <h1 className="text-4xl font-bold text-center mb-4">Register</h1>
       <form onSubmit={handleRegister} className="space-y-4">
         <input
@@ -144,6 +156,7 @@ const Register = () => {
           Login
         </Link>
       </p>
+    </div>
     </div>
   );
 };

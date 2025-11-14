@@ -1,6 +1,7 @@
 import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { AuthContext } from "../../contexts/AuthContext"; // ✅ your Firebase Auth context
+import { toast, ToastContainer } from "react-toastify";
 
 function AddMovieForm() {
   const { user } = useContext(AuthContext); // ✅ Get logged-in user from context
@@ -58,7 +59,8 @@ function AddMovieForm() {
       console.log("Submitting movie:", payload);
       const res = await axios.post("http://localhost:3000/movies/add", payload);
       console.log("Response:", res.data);
-      setMessage("✅ Movie added successfully!");
+      toast.success("Movie added successfully!")
+      setMessage(" Movie added successfully!");
 
       // Reset the form, but keep the logged-in email
       setForm({
@@ -82,12 +84,24 @@ function AddMovieForm() {
             err.response.data
           )}`
         : err.message;
-      setMessage(`❌ Failed to add movie. ${srvMsg}`);
+        toast.error(` Failed to add movie. ${srvMsg}`)
+      setMessage(` Failed to add movie. ${srvMsg}`);
     }
   };
 
   return (
     <div className="bg-gradient-to-r from-gray-900 via-black to-gray-800">
+      <ToastContainer 
+        position="top-right"
+        autoClose={3000} 
+        hideProgressBar={false} 
+        newestOnTop={false} 
+        closeOnClick
+        rtl={false} 
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
       <div className="max-w-3xl py-4  mx-auto p-6 bg-gray-700 text-white rounded shadow-lg">
       <h2 className="text-3xl font-bold mb-6">🎬 Submit a New Movie</h2>
 

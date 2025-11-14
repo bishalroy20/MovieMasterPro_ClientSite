@@ -2,6 +2,7 @@ import { useEffect, useState, useContext } from "react";
 import { useParams, useNavigate } from "react-router";
 import axios from "axios";
 import { AuthContext } from "../../contexts/AuthContext";
+import { toast, ToastContainer } from "react-toastify";
 
 function UpdateMovie() {
   const { id } = useParams();
@@ -60,11 +61,11 @@ function UpdateMovie() {
     e.preventDefault();
     try {
       await axios.put(`http://localhost:3000/movies/update/${id}`, form);
-      alert("✅ Movie updated successfully!");
+      toast.success(" Movie updated successfully!");
       navigate("/movies/my-collection");
     } catch (err) {
       console.error("Update error:", err);
-      alert("❌ Failed to update movie.");
+      toast.error(" Failed to update movie.");
     }
   };
 
@@ -72,6 +73,17 @@ function UpdateMovie() {
 
   return (
     <div className="max-w-2xl mx-auto p-6 bg-gray-900 text-white rounded shadow-lg">
+      <ToastContainer 
+        position="top-right"
+        autoClose={3000} 
+        hideProgressBar={false} 
+        newestOnTop={false} 
+        closeOnClick
+        rtl={false} 
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
       <h2 className="text-3xl font-bold mb-6">✏️ Update Movie</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         {Object.keys(form).map(

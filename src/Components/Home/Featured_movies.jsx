@@ -39,7 +39,7 @@ export default function Featured_movies() {
   }
 
   return (
-    <div className="relative w-full h-[400px] mt-6 bg-gray-800 overflow-hidden rounded-xl shadow-xl">
+    <div className="relative w-full h-[400px] pt-6 bg-gray-800 overflow-hidden rounded-xl shadow-xl">
       {/* Slides wrapper */}
       <div
         className="flex transition-transform duration-[900ms] ease-in-out"
@@ -48,7 +48,7 @@ export default function Featured_movies() {
         {featured.map((movie) => (
           <div
             key={movie._id}
-            className="min-w-full h-[500px] relative"
+            className="min-w-full h-[600px] relative"
           >
             <img
               src={movie.poster}

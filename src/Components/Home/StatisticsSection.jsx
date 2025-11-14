@@ -28,18 +28,19 @@ const StatisticsSection = () => {
 
   return (
     <section className="bg-gray-900 text-white py-12 px-6 text-center">
-      <h2 className="text-3xl font-bold mb-6">📊 Platform Statistics</h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-xl mx-auto">
-        <div className="bg-gray-800 p-6 rounded-lg shadow-md">
-          <h3 className="text-xl font-semibold">🎬 Total Movies</h3>
-          <p className="text-4xl font-bold mt-2">{stats.totalMovies}</p>
-        </div>
-        <div className="bg-gray-800 p-6 rounded-lg shadow-md">
-          <h3 className="text-xl font-semibold">👥 Total Users</h3>
-          <p className="text-4xl font-bold mt-2">{stats.totalUsers}</p>
-        </div>
-      </div>
-    </section>
+  <h2 className="text-3xl font-bold mb-6">📊 Platform Statistics</h2>
+  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-xl mx-auto">
+    <div className="bg-gray-800 p-6 rounded-lg shadow-md">
+      <h3 className="text-xl font-semibold">🎬 Total Movies</h3>
+      <p className="text-4xl font-bold mt-2">{stats.totalMovies}</p>
+    </div>
+    <div className="bg-gray-800 p-6 rounded-lg shadow-md">
+      <h3 className="text-xl font-semibold">👥 Total Users</h3>
+      <p className="text-4xl font-bold mt-2">{stats.totalUsers ? stats.totalUsers : "3" }</p>
+    </div>
+  </div>
+</section>
+
   );
 };
 

@@ -1,7 +1,8 @@
 import { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { AuthContext } from "../../contexts/AuthContext";
-import { useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
+import { ToastContainer } from "react-toastify";
 
 function MyCollection() {
   const { user } = useContext(AuthContext);
@@ -53,6 +54,17 @@ function MyCollection() {
 
   return (
     <div className="max-w-full mx-auto p-6 bg-gradient-to-r from-gray-900 via-black to-gray-800 text-white rounded shadow-lg">
+      <ToastContainer 
+        position="top-right"
+        autoClose={3000} 
+        hideProgressBar={false} 
+        newestOnTop={false} 
+        closeOnClick
+        rtl={false} 
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
       <h2 className="text-3xl font-bold mb-6 text-center">🎞️ My Movie Collection</h2>
 
       {movies.length === 0 ? (
@@ -84,6 +96,12 @@ function MyCollection() {
                 >
                   Edit
                 </button>
+                <Link
+                to={`/movies/${movie._id}`}
+                className="inline-block mt-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded text-white font-semibold"
+              >
+                Details
+              </Link>
                 <button
                   className="bg-red-600 hover:bg-red-700 px-3 py-1 rounded font-semibold"
                   onClick={() => { setDeleteMovieId(movie._id); setShowModal(true); }}

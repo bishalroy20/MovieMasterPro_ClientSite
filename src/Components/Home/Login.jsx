@@ -46,7 +46,8 @@ const Login = () => {
   };
 
   return (
-    <div className="card bg-base-100 mx-auto w-full max-w-sm shadow-2xl py-6 px-4">
+     <div className='bg-gradient-to-r from-gray-900 via-black to-gray-800'>
+    <div className="card bg-gray-100 mx-auto w-full max-w-sm shadow-2xl py-6 px-4">
       <ToastContainer />
       <h1 className="text-4xl font-bold text-center mb-4">Login</h1>
       <form onSubmit={handleLogin} className="space-y-4">
@@ -92,7 +93,7 @@ const Login = () => {
           Register
         </Link>
       </p>
-    </div>
+    </div></div>
   );
 };
 
