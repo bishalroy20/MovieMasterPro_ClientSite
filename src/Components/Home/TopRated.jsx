@@ -12,7 +12,9 @@ export default function TopRatedSlider() {
   useEffect(() => {
     async function fetchTopRated() {
       try {
-        const res = await axios.get("http://localhost:3000/movies/top-rated");
+        const res = await axios.get(
+          "https://movie-master-pro-server-side.vercel.app/movies/top-rated"
+        );
         setMovies(res.data);
       } catch (err) {
         console.error("Failed to load top rated movies:", err);
@@ -23,10 +25,7 @@ export default function TopRatedSlider() {
     fetchTopRated();
   }, []);
 
-  if (loading)
-    return (
-      <Spinner />
-    );
+  if (loading) return <Spinner />;
 
   if (!movies.length)
     return (
@@ -73,7 +72,10 @@ export default function TopRatedSlider() {
           <div key={movie._id} className="p-2">
             <div className="bg-gray-900 rounded-xl shadow-lg overflow-hidden hover:scale-105 transition transform duration-300 w-full">
               <img
-                src={movie.posterUrl || "https://via.placeholder.com/300x400?text=No+Image"}
+                src={
+                  movie.posterUrl ||
+                  "https://via.placeholder.com/300x400?text=No+Image"
+                }
                 alt={movie.title}
                 className="w-full h-60 object-cover"
               />

@@ -1,32 +1,35 @@
-import { useEffect, useState } from 'react';
-import axios from 'axios';
-import { Link } from 'react-router-dom';
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import Spinner from '../../Layout/Spinner';
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { Link } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import Spinner from "../../Layout/Spinner";
 
 function AllMovies() {
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const [selectedGenres, setSelectedGenres] = useState([]);
-  const [minRating, setMinRating] = useState('');
-  const [maxRating, setMaxRating] = useState('');
+  const [minRating, setMinRating] = useState("");
+  const [maxRating, setMaxRating] = useState("");
 
   const fetchMovies = async () => {
     setLoading(true);
     try {
-      const res = await axios.get('http://localhost:3000/movies', {
-        params: {
-          genres: selectedGenres.join(','), // comma-separated genres
-          minRating,
-          maxRating,
-        },
-      });
+      const res = await axios.get(
+        "https://movie-master-pro-server-side.vercel.app/movies",
+        {
+          params: {
+            genres: selectedGenres.join(","), // comma-separated genres
+            minRating,
+            maxRating,
+          },
+        }
+      );
       setMovies(res.data);
     } catch (err) {
-      console.error('Fetch error:', err);
-      setError('❌ Failed to fetch movies.');
+      console.error("Fetch error:", err);
+      setError("❌ Failed to fetch movies.");
     } finally {
       setLoading(false);
     }
@@ -42,7 +45,12 @@ function AllMovies() {
     );
   };
 
-  if (loading) return <p className="text-center text-white mt-10"><Spinner /></p>;
+  if (loading)
+    return (
+      <p className="text-center text-white mt-10">
+        <Spinner />
+      </p>
+    );
   if (error) return <p className="text-center text-red-500 mt-10">{error}</p>;
 
   return (
@@ -55,18 +63,18 @@ function AllMovies() {
       <div className="flex flex-wrap gap-4 mb-6 justify-center">
         {/* Genre checkboxes */}
         {[
-          'Action',
-          'Comedy',
-          'Drama',
-          'Horror',
-          'Musical',
-          'Sport',
-          'Thriller',
-          'Romance',
-          'Sci-Fi',
-          'Fantasy',
-          'Adventure',
-          'Mystery'
+          "Action",
+          "Comedy",
+          "Drama",
+          "Horror",
+          "Musical",
+          "Sport",
+          "Thriller",
+          "Romance",
+          "Sci-Fi",
+          "Fantasy",
+          "Adventure",
+          "Mystery",
         ].map((genre) => (
           <label key={genre} className="flex items-center gap-2">
             <input
@@ -100,9 +108,15 @@ function AllMovies() {
       ) : (
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {movies.map((movie) => (
-            <div key={movie._id} className="bg-gray-800 p-4 rounded-lg shadow-md hover:shadow-lg transition duration-200">
+            <div
+              key={movie._id}
+              className="bg-gray-800 p-4 rounded-lg shadow-md hover:shadow-lg transition duration-200"
+            >
               <img
-                src={movie.posterUrl || 'https://via.placeholder.com/300x400?text=No+Image'}
+                src={
+                  movie.posterUrl ||
+                  "https://via.placeholder.com/300x400?text=No+Image"
+                }
                 alt={movie.title}
                 className="w-full h-64 object-cover rounded mb-3"
               />
@@ -111,7 +125,7 @@ function AllMovies() {
                 🎭 {movie.genre} | 📅 {movie.releaseYear}
               </p>
               <p className="text-gray-300 text-sm mb-1">
-                ⭐ Rating: {movie.rating} | ⏱ {movie.duration || 'N/A'} mins
+                ⭐ Rating: {movie.rating} | ⏱ {movie.duration || "N/A"} mins
               </p>
               <p className="text-gray-400 text-sm mb-2">
                 🎬 Directed by {movie.director}

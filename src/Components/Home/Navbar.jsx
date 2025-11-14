@@ -1,26 +1,28 @@
-import React, { use } from 'react';
+import React, { use, useState } from 'react';
 import { Link, Navigate, NavLink } from 'react-router';
 import { AuthContext } from '../../contexts/AuthContext';
 import { toast, ToastContainer } from 'react-toastify';
 
 
 
-const Navbar = () => {
+const Navbar = ({theme,setTheme}) => {
     const { user, signOutUser } = use(AuthContext);
+    const handletoggle=(e)=>{
+         setTheme(e.target.checked ? "dark" : "light");
+    }
 
-
-    const handleSignOut = () => {
-        signOutUser()
-            .then(() => {
+    // const handleSignOut = () => {
+    //     signOutUser()
+    //         .then(() => {
            
-            toast.success('Signed out successfully!');
-            Navigate('/login'); 
-            })
-            .catch(err => {
-            toast.error('Sign out failed. Please try again.');
-            console.error(err);
-            });
-        };      
+    //         toast.success('Signed out successfully!');
+    //         Navigate('/login'); 
+    //         })
+    //         .catch(err => {
+    //         toast.error('Sign out failed. Please try again.');
+    //         console.error(err);
+    //         });
+    //     };      
 
     const links = <>
         <li><NavLink className='hover:bg-yellow-200 hover:text-black' to="/">Home</NavLink></li>
@@ -53,7 +55,16 @@ const Navbar = () => {
                 </ul>
             </div>
             <div className="navbar-end">
-
+                  <label className="relative inline-flex items-center cursor-pointer ml-6">
+              <input
+                type="checkbox"
+                checked={theme === "dark"}
+                onChange={handletoggle}
+                className="sr-only peer"
+              />
+              <div className="w-14 h-8 bg-gray-200 rounded-full peer-checked:bg-blue-600 transition-colors duration-300"></div>
+              <div className="absolute left-1 top-1 w-6 h-6 bg-white rounded-full border border-gray-300 peer-checked:translate-x-6 peer-checked:border-blue-600 transition-transform duration-300"></div>
+            </label>
 
                 {user ? (
                 <div className="flex items-center gap-4">
@@ -79,6 +90,8 @@ const Navbar = () => {
                 </div>
                 )}
             </div>
+
+               
         </div>
     );
 };

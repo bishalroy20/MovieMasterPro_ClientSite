@@ -57,9 +57,12 @@ function AddMovieForm() {
 
     try {
       console.log("Submitting movie:", payload);
-      const res = await axios.post("http://localhost:3000/movies/add", payload);
+      const res = await axios.post(
+        "https://movie-master-pro-server-side.vercel.app/movies/add",
+        payload
+      );
       console.log("Response:", res.data);
-      toast.success("Movie added successfully!")
+      toast.success("Movie added successfully!");
       setMessage(" Movie added successfully!");
 
       // Reset the form, but keep the logged-in email
@@ -84,70 +87,70 @@ function AddMovieForm() {
             err.response.data
           )}`
         : err.message;
-        toast.error(` Failed to add movie. ${srvMsg}`)
+      toast.error(` Failed to add movie. ${srvMsg}`);
       setMessage(` Failed to add movie. ${srvMsg}`);
     }
   };
 
   return (
     <div className="bg-gradient-to-r from-gray-900 via-black to-gray-800">
-      <ToastContainer 
+      <ToastContainer
         position="top-right"
-        autoClose={3000} 
-        hideProgressBar={false} 
-        newestOnTop={false} 
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
         closeOnClick
-        rtl={false} 
+        rtl={false}
         pauseOnFocusLoss
         draggable
         pauseOnHover
       />
       <div className="max-w-3xl py-4  mx-auto p-6 bg-gray-700 text-white rounded shadow-lg">
-      <h2 className="text-3xl font-bold mb-6">🎬 Submit a New Movie</h2>
+        <h2 className="text-3xl font-bold mb-6">🎬 Submit a New Movie</h2>
 
-      {!user ? (
-        <p className="text-red-400 text-center mb-4">
-          ⚠️ Please log in to add a movie.
-        </p>
-      ) : (
-        <>
-          <form onSubmit={handleSubmit} className="space-y-4">
-            {Object.keys(form).map(
-              (key) =>
-                key !== "addedBy" && (
-                  <div key={key}>
-                    <label className="block mb-1 capitalize">
-                      {key.replace(/([A-Z])/g, " $1")}
-                    </label>
-                    <input
-                      type="text"
-                      name={key}
-                      value={form[key]}
-                      onChange={handleChange}
-                      className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded"
-                      required
-                    />
-                  </div>
-                )
-            )}
-
-            <button
-              type="submit"
-              className="w-full py-2 bg-blue-600 hover:bg-blue-700 rounded font-semibold"
-            >
-              Add Movie
-            </button>
-
-            {message && <p className="mt-4 text-yellow-400">{message}</p>}
-          </form>
-
-          <p className="mt-4 text-sm text-gray-400">
-            👤 Logged in as:{" "}
-            <span className="text-blue-400">{form.addedBy}</span>
+        {!user ? (
+          <p className="text-red-400 text-center mb-4">
+            ⚠️ Please log in to add a movie.
           </p>
-        </>
-      )}
-    </div>
+        ) : (
+          <>
+            <form onSubmit={handleSubmit} className="space-y-4">
+              {Object.keys(form).map(
+                (key) =>
+                  key !== "addedBy" && (
+                    <div key={key}>
+                      <label className="block mb-1 capitalize">
+                        {key.replace(/([A-Z])/g, " $1")}
+                      </label>
+                      <input
+                        type="text"
+                        name={key}
+                        value={form[key]}
+                        onChange={handleChange}
+                        className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded"
+                        required
+                      />
+                    </div>
+                  )
+              )}
+
+              <button
+                type="submit"
+                className="w-full py-2 bg-blue-600 hover:bg-blue-700 rounded font-semibold"
+              >
+                Add Movie
+              </button>
+
+              {message && <p className="mt-4 text-yellow-400">{message}</p>}
+            </form>
+
+            <p className="mt-4 text-sm text-gray-400">
+              👤 Logged in as:{" "}
+              <span className="text-blue-400">{form.addedBy}</span>
+            </p>
+          </>
+        )}
+      </div>
     </div>
   );
 }

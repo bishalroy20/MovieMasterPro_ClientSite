@@ -11,8 +11,8 @@ export default function WatchList() {
   useEffect(() => {
     if (user) {
       axios
-        .get("http://localhost:3000/watchlist", {
-          params: { email: user.email }
+        .get("https://movie-master-pro-server-side.vercel.app/watchlist", {
+          params: { email: user.email },
         })
         .then((res) => setWatchlist(res.data))
         .catch(() => toast.error("Failed to load watchlist"));
@@ -21,7 +21,9 @@ export default function WatchList() {
 
   const handleRemove = async (id) => {
     try {
-      await axios.delete(`http://localhost:3000/watchlist/remove/${id}`);
+      await axios.delete(
+        `https://movie-master-pro-server-side.vercel.app/watchlist/remove/${id}`
+      );
       setWatchlist(watchlist.filter((item) => item._id !== id));
       toast.success("Removed from watchlist");
     } catch {

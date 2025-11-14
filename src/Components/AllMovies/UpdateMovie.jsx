@@ -30,7 +30,9 @@ function UpdateMovie() {
 
     async function fetchMovie() {
       try {
-        const res = await axios.get(`http://localhost:3000/movies/${id}`);
+        const res = await axios.get(
+          `https://movie-master-pro-server-side.vercel.app/movies/${id}`
+        );
         const movie = res.data;
 
         // Authorization check
@@ -60,7 +62,10 @@ function UpdateMovie() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`http://localhost:3000/movies/update/${id}`, form);
+      await axios.put(
+        `https://movie-master-pro-server-side.vercel.app/movies/update/${id}`,
+        form
+      );
       toast.success(" Movie updated successfully!");
       navigate("/movies/my-collection");
     } catch (err) {
@@ -69,17 +74,18 @@ function UpdateMovie() {
     }
   };
 
-  if (loading) return <p className="text-center text-white mt-10">Loading movie...</p>;
+  if (loading)
+    return <p className="text-center text-white mt-10">Loading movie...</p>;
 
   return (
     <div className="max-w-2xl mx-auto p-6 bg-gray-900 text-white rounded shadow-lg">
-      <ToastContainer 
+      <ToastContainer
         position="top-right"
-        autoClose={3000} 
-        hideProgressBar={false} 
-        newestOnTop={false} 
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
         closeOnClick
-        rtl={false} 
+        rtl={false}
         pauseOnFocusLoss
         draggable
         pauseOnHover

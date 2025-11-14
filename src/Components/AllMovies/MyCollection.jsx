@@ -23,7 +23,9 @@ function MyCollection() {
 
     async function fetchMovies() {
       try {
-        const res = await axios.get(`http://localhost:3000/movies/my/${user.email}`);
+        const res = await axios.get(
+          `https://movie-master-pro-server-side.vercel.app/movies/my/${user.email}`
+        );
         setMovies(res.data);
       } catch (err) {
         console.error(err);
@@ -40,7 +42,9 @@ function MyCollection() {
   const handleDelete = async () => {
     if (!deleteMovieId) return;
     try {
-      await axios.delete(`http://localhost:3000/movies/delete/${deleteMovieId}`);
+      await axios.delete(
+        `https://movie-master-pro-server-side.vercel.app/movies/delete/${deleteMovieId}`
+      );
       setMovies(movies.filter((m) => m._id !== deleteMovieId));
       setShowModal(false);
     } catch (err) {
@@ -49,32 +53,43 @@ function MyCollection() {
     }
   };
 
-  if (loading) return <p className="text-center text-white mt-10">Loading...</p>;
+  if (loading)
+    return <p className="text-center text-white mt-10">Loading...</p>;
   if (error) return <p className="text-center text-red-500 mt-10">{error}</p>;
 
   return (
     <div className="max-w-full mx-auto p-6 bg-gradient-to-r from-gray-900 via-black to-gray-800 text-white rounded shadow-lg">
-      <ToastContainer 
+      <ToastContainer
         position="top-right"
-        autoClose={3000} 
-        hideProgressBar={false} 
-        newestOnTop={false} 
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
         closeOnClick
-        rtl={false} 
+        rtl={false}
         pauseOnFocusLoss
         draggable
         pauseOnHover
       />
-      <h2 className="text-3xl font-bold mb-6 text-center">🎞️ My Movie Collection</h2>
+      <h2 className="text-3xl font-bold mb-6 text-center">
+        🎞️ My Movie Collection
+      </h2>
 
       {movies.length === 0 ? (
-        <p className="text-gray-400 text-center">You haven’t added any movies yet.</p>
+        <p className="text-gray-400 text-center">
+          You haven’t added any movies yet.
+        </p>
       ) : (
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {movies.map((movie) => (
-            <div key={movie._id} className="bg-gray-800 p-4 rounded-lg shadow-md hover:shadow-lg transition duration-200 relative">
+            <div
+              key={movie._id}
+              className="bg-gray-800 p-4 rounded-lg shadow-md hover:shadow-lg transition duration-200 relative"
+            >
               <img
-                src={movie.posterUrl || "https://via.placeholder.com/300x400?text=No+Image"}
+                src={
+                  movie.posterUrl ||
+                  "https://via.placeholder.com/300x400?text=No+Image"
+                }
                 alt={movie.title}
                 className="w-full h-64 object-cover rounded mb-3"
               />
@@ -85,8 +100,12 @@ function MyCollection() {
               <p className="text-gray-300 text-sm mb-1">
                 ⭐ Rating: {movie.rating} | ⏱ {movie.duration} mins
               </p>
-              <p className="text-gray-400 text-sm mb-2">🎬 Directed by {movie.director}</p>
-              <p className="text-gray-300 text-sm line-clamp-3">{movie.plotSummary}</p>
+              <p className="text-gray-400 text-sm mb-2">
+                🎬 Directed by {movie.director}
+              </p>
+              <p className="text-gray-300 text-sm line-clamp-3">
+                {movie.plotSummary}
+              </p>
 
               {/* Buttons */}
               <div className="flex justify-between mt-3">
@@ -97,14 +116,17 @@ function MyCollection() {
                   Edit
                 </button>
                 <Link
-                to={`/movies/${movie._id}`}
-                className="inline-block mt-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded text-white font-semibold"
-              >
-                Details
-              </Link>
+                  to={`/movies/${movie._id}`}
+                  className="inline-block mt-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded text-white font-semibold"
+                >
+                  Details
+                </Link>
                 <button
                   className="bg-red-600 hover:bg-red-700 px-3 py-1 rounded font-semibold"
-                  onClick={() => { setDeleteMovieId(movie._id); setShowModal(true); }}
+                  onClick={() => {
+                    setDeleteMovieId(movie._id);
+                    setShowModal(true);
+                  }}
                 >
                   Delete
                 </button>
