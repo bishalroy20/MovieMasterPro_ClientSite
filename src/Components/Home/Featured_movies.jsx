@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import Spinner from "../../Layout/Spinner";
 
 export default function Featured_movies() {
  
@@ -33,7 +34,7 @@ export default function Featured_movies() {
   if (featured.length === 0) {
     return (
       <div className="h-[400px] flex items-center justify-center bg-gray-800 text-white">
-        Loading Featured Movies...
+        <Spinner />
       </div>
     );
   }

@@ -3,6 +3,7 @@ import axios from "axios";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import Spinner from "../../Layout/Spinner";
 
 export default function RecentlyAddedSlider() {
   const [movies, setMovies] = useState([]);
@@ -24,9 +25,7 @@ export default function RecentlyAddedSlider() {
 
   if (loading)
     return (
-      <p className="text-center text-gray-300 mt-6 text-xl">
-        Loading recently added movies...
-      </p>
+      <Spinner />
     );
 
   if (!movies.length)

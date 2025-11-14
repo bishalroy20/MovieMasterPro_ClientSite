@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Spinner from '../../Layout/Spinner';
 
 function AllMovies() {
   const [movies, setMovies] = useState([]);
@@ -41,7 +42,7 @@ function AllMovies() {
     );
   };
 
-  if (loading) return <p className="text-center text-white mt-10">Loading movies...</p>;
+  if (loading) return <p className="text-center text-white mt-10"><Spinner /></p>;
   if (error) return <p className="text-center text-red-500 mt-10">{error}</p>;
 
   return (
