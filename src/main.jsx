@@ -27,8 +27,6 @@ const router = createBrowserRouter([
       { index: true, element: <Home /> },
       { path: 'movies', element: <AllMovies /> },
       { path: 'movies/:id', element: <MovieDetails /> },
-
-      // 🔓 Public Routes (login/register hidden if logged in)
       {
         element: <PublicRoute />,
         children: [

@@ -1,7 +1,8 @@
 import React, { use } from 'react';
 import { Link, Navigate, NavLink } from 'react-router';
 import { AuthContext } from '../../contexts/AuthContext';
-import { toast } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
+
 
 const Navbar = () => {
     const { user, signOutUser } = use(AuthContext);
@@ -9,10 +10,9 @@ const Navbar = () => {
     const handleSignOut = () => {
         signOutUser()
             .then(() => {
-            localStorage.removeItem('token');
-            localStorage.removeItem('userEmail');
+           
             toast.success('Signed out successfully!');
-            Navigate('/login'); // redirect to login page
+            Navigate('/login'); 
             })
             .catch(err => {
             toast.error('Sign out failed. Please try again.');
@@ -30,6 +30,7 @@ const Navbar = () => {
 
     return (
         <div className="navbar bg-gradient-to-r from-gray-900 via-black to-gray-800 text-white shadow-sm w-full">
+            <ToastContainer />
             <div className="navbar-start">
                 <div className="dropdown">
                     <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -41,6 +42,7 @@ const Navbar = () => {
                         {links}
                     </ul>
                 </div>
+                
                 <h1 className="ghost text-xl">Movie<span>Master</span></h1>
             </div>
             <div className="navbar-center hidden lg:flex">

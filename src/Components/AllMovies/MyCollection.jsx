@@ -15,7 +15,7 @@ function MyCollection() {
   // Fetch user's movies
   useEffect(() => {
     if (!user?.email) {
-      setError("❌ Please log in to view your collection.");
+      setError("❌ Please add movie to view your collection.");
       setLoading(false);
       return;
     }

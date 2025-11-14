@@ -1,46 +1,53 @@
-import React, { useEffect, useState } from 'react';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Autoplay, Navigation } from 'swiper/modules';
-import 'swiper/css';
-import 'swiper/css/navigation';
+import { useEffect, useState } from "react";
+import axios from "axios";
 
-const TopRated = () => {
+export default function TopRated() {
   const [movies, setMovies] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch('http://localhost:3000/toprated')
-      .then(res => res.json())
-      .then(data => setMovies(data))
-      .catch(err => console.error('Failed to fetch top-rated movies:', err));
+    async function loadMovies() {
+      try {
+        const res = await axios.get("http://localhost:3000/movies/top-rated");
+        setMovies(res.data);
+      } catch (err) {
+        console.error("Failed to load top movies:", err);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    loadMovies();
   }, []);
 
-  return (
-    <section className="w-full bg-black text-white py-10 px-4">
-      <h2 className="text-3xl font-bold text-center mb-6">🌟 Top Rated Movies</h2>
-      <Swiper
-        modules={[Navigation, Autoplay]}
-        navigation
-        autoplay={{ delay: 3000 }}
-        loop={true}
-        slidesPerView={1}
-        breakpoints={{
-          640: { slidesPerView: 2 },
-          1024: { slidesPerView: 3 },
-        }}
-        className="w-full h-[400px]"
-      >
-        {movies.map(movie => (
-          <SwiperSlide key={movie.title}>
-            <img
-              src={movie.posterUrl}
-              alt={movie.title}
-              className="w-full h-full object-cover rounded-lg shadow-lg"
-            />
-          </SwiperSlide>
-        ))}
-      </Swiper>
-    </section>
-  );
-};
+  if (loading)
+    return <p className="text-center text-gray-300 mt-6 text-xl">Loading top movies...</p>;
 
-export default TopRated;
+  if (!movies.length)
+    return <p className="text-center text-red-400 mt-6 text-xl">No movies found</p>;
+
+  return (
+    <div className="max-w-full mx-auto py-10 px-4 bg-gray-900 text-white">
+      <h2 className="text-3xl font-bold mb-6 text-white text-center">🔥 Top Rated Movies</h2>
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+        {movies.map((m) => (
+          <div
+            key={m._id}
+            className="bg-gray-900 rounded-xl shadow-lg overflow-hidden hover:scale-105 transition transform duration-300"
+          >
+            <img
+              src={m.posterUrl || "https://via.placeholder.com/300x400?text=No+Image"}
+              alt={m.title}
+              className="w-full h-60 object-cover"
+            />
+            <div className="p-4">
+              <h3 className="text-xl font-semibold text-white">{m.title}</h3>
+              <p className="text-yellow-400 font-bold mt-2">⭐ Rating: {m.rating}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
