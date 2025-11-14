@@ -1,16 +1,61 @@
-# React + Vite
+Project Title: MovieMaster Pro
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-Currently, two official plugins are available:
+Theme: A comprehensive movie management system where users can browse, manage, and organize their favorite movies with advanced filtering and personal collections.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-## React Compiler
+Live Link : 
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
 
-## Expanding the ESLint configuration
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+
+---
+
+##  Features
+
+- **Browse Movies**
+  - View movie cards with poster, title, genre, release year, director, cast, rating, and description.
+  - Click on a movie to see full details.
+
+- **Filter Movies**
+  - Filter by multiple genres.
+  - Filter by rating range (min/max).
+  - Extendable to release year, director, or cast.
+
+- **Add & Update Movies**
+  - Add new movies via a form (title, genre, release year, director, cast, rating, duration, poster URL, plot summary).
+  - Update existing movie details.
+
+- **Featured Movies**
+  - Mark movies as `featured: true` and display them in a special section.
+
+- **High Rated Movies**
+  - Show movies with rating ≥ 8 in a “Top Rated” section.
+
+- **Recent Movies**
+  - Display movies sorted by release year (latest first).
+
+- **Watchlist**
+  - Logged-in users can add movies to their personal watchlist.
+  - View and manage watchlist in a dedicated page.
+
+- **Authentication**
+  - Email/password login with Firebase.
+  - Google login via Firebase.
+  - Profile and logout options.
+
+
+
+---
+
+## 🛠 Tech Stack
+
+- **Frontend:** React, React Router, Axios, TailwindCSS, DaisyUI, React Toastify
+- **Backend:** Node.js, Express.js, MongoDB (native driver)
+- **Auth:** Firebase Authentication
+- **UI Components:** DaisyUI (Navbar, Buttons, Theme Toggle)
+
+
+
+
+
