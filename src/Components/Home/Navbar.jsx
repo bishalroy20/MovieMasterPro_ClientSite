@@ -11,18 +11,18 @@ const Navbar = ({theme,setTheme}) => {
          setTheme(e.target.checked ? "dark" : "light");
     }
 
-    // const handleSignOut = () => {
-    //     signOutUser()
-    //         .then(() => {
+    const handleSignOut = () => {
+        signOutUser()
+            .then(() => {
            
-    //         toast.success('Signed out successfully!');
-    //         Navigate('/login'); 
-    //         })
-    //         .catch(err => {
-    //         toast.error('Sign out failed. Please try again.');
-    //         console.error(err);
-    //         });
-    //     };      
+            toast.success('Signed out successfully!');
+            Navigate('/login'); 
+            })
+            .catch(err => {
+            toast.error('Sign out failed. Please try again.');
+            console.error(err);
+            });
+        };      
 
     const links = <>
         <li><NavLink className='hover:bg-yellow-200 hover:text-black' to="/">Home</NavLink></li>
@@ -66,8 +66,16 @@ const Navbar = ({theme,setTheme}) => {
               <div className="absolute left-1 top-1 w-6 h-6 bg-white rounded-full border border-gray-300 peer-checked:translate-x-6 peer-checked:border-blue-600 transition-transform duration-300"></div>
             </label>
 
+
+
+                
+
                 {user ? (
+                    
                 <div className="flex items-center gap-4">
+                    <button>
+                     <li><button className='btn btn-outline hover:bg-white-200 hover:text-black' onClick={signOutUser}>Logout</button></li>
+                </button>
                     <div className="dropdown dropdown-end">
                     <label tabIndex={0} className="btn btn-circle avatar">
                         <div className="w-10 rounded-full">
@@ -79,7 +87,11 @@ const Navbar = ({theme,setTheme}) => {
                         className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-black  rounded-box w-52"
                     >
                         <li><Link className='hover:bg-yellow-200 hover:text-black' to="/profile">Profile</Link></li>
+                        <li><Link to="/movies/watchList" className='hover:bg-yellow-200 hover:text-black'>
+                            My Watchlist
+                        </Link></li>
                         <li><button className='hover:bg-yellow-200 hover:text-black' onClick={signOutUser}>Logout</button></li>
+                        
                     </ul>
                     </div>
                 </div>
