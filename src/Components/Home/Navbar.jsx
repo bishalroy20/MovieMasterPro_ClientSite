@@ -54,10 +54,6 @@ const Navbar = () => {
             </div>
             <div className="navbar-end">
 
-                
-
-               
-
 
                 {user ? (
                 <div className="flex items-center gap-4">
