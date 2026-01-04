@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom"; // ✅ FIXED
 import axios from "axios";
 import Spinner from "../../Layout/Spinner";
 
-export default function Featured_movies() {
+export default function Featured_movies({theme}) {
   const [featured, setFeatured] = useState([]);
   const [current, setCurrent] = useState(0);
-  const delay = 2500; // 2.5 seconds
+  const delay = 5000;
 
   useEffect(() => {
     async function fetchFeatured() {
@@ -21,7 +22,6 @@ export default function Featured_movies() {
     fetchFeatured();
   }, []);
 
-  // Auto-slide effect
   useEffect(() => {
     if (featured.length === 0) return;
 
@@ -30,53 +30,82 @@ export default function Featured_movies() {
     }, delay);
 
     return () => clearInterval(interval);
-  }, [featured]);
+  }, [featured.length, delay]);
 
   if (featured.length === 0) {
     return (
-      <div className="h-[400px] flex items-center justify-center bg-gray-800 text-white">
+      // <div className="h-[400px] flex items-center justify-center bg-gray-800 text-white">
         <Spinner />
-      </div>
+      // </div>
     );
   }
 
   return (
-    <div className="relative w-full h-[400px] pt-6 bg-gray-800 overflow-hidden rounded-xl shadow-xl">
+    <div className="relative w-full h-[65vh] overflow-hidden rounded-xl shadow-2xl">
       {/* Slides wrapper */}
       <div
-        className="flex transition-transform duration-[900ms] ease-in-out"
+        className="flex h-full transition-transform duration-1000 ease-in-out"
         style={{ transform: `translateX(-${current * 100}%)` }}
       >
         {featured.map((movie) => (
-          <div key={movie._id} className="min-w-full h-[600px] relative">
-            <img
-              src={movie.poster}
-              alt={movie.title}
-              className="w-full h-full object-cover opacity-90"
-            />
+          <div
+            key={movie._id}
+            className="min-w-full h-full relative flex items-center"
+            style={{
+              backgroundImage: `url(${movie.poster})`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+            }}
+          >
+            {/* Overlay */}
+            <div className="absolute inset-0 bg-black/60"></div>
 
-            {/* Gradient Overlay */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent"></div>
-
-            {/* Text Content */}
-            <div className="absolute bottom-8 left-8 text-white drop-shadow-xl">
-              <h2 className="text-3xl md:text-4xl font-bold">{movie.title}</h2>
-              <p className="text-gray-200 mt-2 max-w-md line-clamp-2">
-                {movie.description || "A featured movie from our collection."}
+            {/* Content */}
+            <div className="relative z-10 max-w-2xl px-6 md:px-12 text-white">
+              <h2 className="text-3xl md:text-5xl font-extrabold drop-shadow-lg">
+                {movie.title}
+              </h2>
+              <p className="mt-2 text-gray-100 text-sm md:text-lg">
+                🎭 {movie.genre} | 📅 {movie.year}
               </p>
+              <p className="mt-4 text-gray-100 line-clamp-3">
+                {movie.description ||
+                  "Discover this featured movie from our collection."}
+              </p>
+
+              <Link to={`/movies/${movie.movie_id}`}>
+              <a className="btn btn-outline"> View Details</a>
+              </Link>
             </div>
           </div>
         ))}
       </div>
 
-      {/* Dot Indicators */}
-      <div className="absolute bottom-4 w-full flex justify-center gap-2">
+      {/* Arrows */}
+      <button
+        onClick={() =>
+          setCurrent((prev) => (prev - 1 + featured.length) % featured.length)
+        }
+        className="absolute top-1/2 left-4 -translate-y-1/2 bg-black/50 text-white p-3 rounded-full hover:bg-black/70"
+      >
+        ❮
+      </button>
+
+      <button
+        onClick={() => setCurrent((prev) => (prev + 1) % featured.length)}
+        className="absolute top-1/2 right-4 -translate-y-1/2 bg-black/50 text-white p-3 rounded-full hover:bg-black/70"
+      >
+        ❯
+      </button>
+
+      {/* Dots */}
+      <div className="absolute bottom-6 w-full flex justify-center gap-3">
         {featured.map((_, index) => (
           <button
             key={index}
             onClick={() => setCurrent(index)}
             className={`w-3 h-3 rounded-full transition-all ${
-              current === index ? "bg-white scale-125" : "bg-white/50"
+              current === index ? "bg-yellow-400 scale-125" : "bg-white/50"
             }`}
           />
         ))}

@@ -1,7 +1,7 @@
 import { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { AuthContext } from "../../contexts/AuthContext";
-import { Link, useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 
 function MyCollection() {
@@ -12,6 +12,10 @@ function MyCollection() {
   const [error, setError] = useState("");
   const [deleteMovieId, setDeleteMovieId] = useState(null);
   const [showModal, setShowModal] = useState(false);
+
+  // Pagination state
+  const [currentPage, setCurrentPage] = useState(1);
+  const MOVIES_PER_PAGE = 10;
 
   // Fetch user's movies
   useEffect(() => {
@@ -57,19 +61,16 @@ function MyCollection() {
     return <p className="text-center text-white mt-10">Loading...</p>;
   if (error) return <p className="text-center text-red-500 mt-10">{error}</p>;
 
+  // Pagination logic
+  const indexOfLastMovie = currentPage * MOVIES_PER_PAGE;
+  const indexOfFirstMovie = indexOfLastMovie - MOVIES_PER_PAGE;
+  const currentMovies = movies.slice(indexOfFirstMovie, indexOfLastMovie);
+  const totalPages = Math.ceil(movies.length / MOVIES_PER_PAGE);
+
   return (
     <div className="max-w-full mx-auto p-6 bg-gradient-to-r from-gray-900 via-black to-gray-800 text-white rounded shadow-lg">
-      <ToastContainer
-        position="top-right"
-        autoClose={3000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
+      <ToastContainer position="top-right" autoClose={3000} />
+
       <h2 className="text-3xl font-bold mb-6 text-center">
         🎞️ My Movie Collection
       </h2>
@@ -79,61 +80,99 @@ function MyCollection() {
           You haven’t added any movies yet.
         </p>
       ) : (
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {movies.map((movie) => (
-            <div
-              key={movie._id}
-              className="bg-gray-800 p-4 rounded-lg shadow-md hover:shadow-lg transition duration-200 relative"
-            >
-              <img
-                src={
-                  movie.posterUrl ||
-                  "https://via.placeholder.com/300x400?text=No+Image"
-                }
-                alt={movie.title}
-                className="w-full h-64 object-cover rounded mb-3"
-              />
-              <h3 className="text-xl font-semibold mb-1">{movie.title}</h3>
-              <p className="text-gray-400 text-sm mb-1">
-                🎭 {movie.genre} | 📅 {movie.releaseYear}
-              </p>
-              <p className="text-gray-300 text-sm mb-1">
-                ⭐ Rating: {movie.rating} | ⏱ {movie.duration} mins
-              </p>
-              <p className="text-gray-400 text-sm mb-2">
-                🎬 Directed by {movie.director}
-              </p>
-              <p className="text-gray-300 text-sm line-clamp-3">
-                {movie.plotSummary}
-              </p>
+        <>
+          {/* Grid with 5 cards per row on large screens */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+            {currentMovies.map((movie) => (
+              <div
+                key={movie._id}
+                className="bg-gray-800 p-4 rounded-lg shadow-md hover:shadow-lg transition duration-200"
+              >
+                <img
+                  src={
+                    movie.posterUrl ||
+                    "https://via.placeholder.com/300x400?text=No+Image"
+                  }
+                  alt={movie.title}
+                  className="w-full h-64 object-cover rounded mb-3"
+                />
+                <h3 className="text-lg font-semibold mb-1">{movie.title}</h3>
+                <p className="text-gray-400 text-sm mb-1">
+                  🎭 {movie.genre} | 📅 {movie.releaseYear}
+                </p>
+                <p className="text-gray-300 text-sm mb-1">
+                  ⭐ {movie.rating} | ⏱ {movie.duration} mins
+                </p>
+                <p className="text-gray-400 text-sm mb-2">
+                  🎬 {movie.director}
+                </p>
+                <p className="text-gray-300 text-sm line-clamp-3">
+                  {movie.plotSummary}
+                </p>
 
-              {/* Buttons */}
-              <div className="flex justify-between mt-3">
-                <button
-                  className="bg-yellow-500 hover:bg-yellow-600 px-3 py-1 rounded text-black font-semibold"
-                  onClick={() => navigate(`/movies/update/${movie._id}`)}
-                >
-                  Edit
-                </button>
-                <Link
-                  to={`/movies/${movie._id}`}
-                  className="inline-block mt-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded text-white font-semibold"
-                >
-                  Details
-                </Link>
-                <button
-                  className="bg-red-600 hover:bg-red-700 px-3 py-1 rounded font-semibold"
-                  onClick={() => {
-                    setDeleteMovieId(movie._id);
-                    setShowModal(true);
-                  }}
-                >
-                  Delete
-                </button>
+                {/* Buttons */}
+                <div className="flex justify-between mt-3">
+                  <button
+                    className="bg-yellow-500 hover:bg-yellow-600 px-3 py-1 rounded text-black font-semibold"
+                    onClick={() => navigate(`/movies/update/${movie._id}`)}
+                  >
+                    Edit
+                  </button>
+                  <Link
+                    to={`/movies/${movie._id}`}
+                    className="px-3 py-1 bg-blue-600 hover:bg-blue-700 rounded text-white font-semibold"
+                  >
+                    Details
+                  </Link>
+                  <button
+                    className="bg-red-600 hover:bg-red-700 px-3 py-1 rounded font-semibold"
+                    onClick={() => {
+                      setDeleteMovieId(movie._id);
+                      setShowModal(true);
+                    }}
+                  >
+                    Delete
+                  </button>
+                </div>
               </div>
+            ))}
+          </div>
+
+          {/* Pagination */}
+          {totalPages > 1 && (
+            <div className="flex justify-center items-center gap-2 mt-8">
+              <button
+                onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
+                disabled={currentPage === 1}
+                className="px-3 py-1 rounded bg-gray-500 text-white disabled:opacity-50"
+              >
+                Prev
+              </button>
+
+              {Array.from({ length: totalPages }, (_, i) => (
+                <button
+                  key={i + 1}
+                  onClick={() => setCurrentPage(i + 1)}
+                  className={`px-3 py-1 rounded ${
+                    currentPage === i + 1
+                      ? "bg-blue-600 text-white"
+                      : "bg-gray-700 text-white hover:bg-gray-600"
+                  }`}
+                >
+                  {i + 1}
+                </button>
+              ))}
+
+              <button
+                onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
+                disabled={currentPage === totalPages}
+                className="px-3 py-1 rounded bg-gray-500 text-white disabled:opacity-50"
+              >
+                Next
+              </button>
             </div>
-          ))}
-        </div>
+          )}
+        </>
       )}
 
       {/* Delete Confirmation Modal */}

@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
+import { useOutletContext } from "react-router";
 import Description from "./Description";
 import Featured_movies from "./Featured_movies";
 import About from "./About";
@@ -7,20 +8,23 @@ import StatisticsSection from "./StatisticsSection";
 import GenreSection from "./GenreSection";
 import RecentlyAdded from "./RecentlyAdded";
 import { ToastContainer } from "react-toastify";
-import { FaMoon, FaSun } from "react-icons/fa6";
+import Contact from "./Contact";
 
 const Home = () => {
+  // Grab theme + setTheme from Outlet context
+  const { theme, setTheme } = useOutletContext();
+
   return (
     <div>
       <ToastContainer />
-
-      <Description></Description>
-      <Featured_movies></Featured_movies>
-      <StatisticsSection></StatisticsSection>
-      <TopRated></TopRated>
-      <RecentlyAdded></RecentlyAdded>
-      <GenreSection></GenreSection>
-      <About></About>
+      <Description theme={theme} setTheme={setTheme} />
+      <Featured_movies theme={theme} setTheme={setTheme} />
+      <StatisticsSection theme={theme} setTheme={setTheme} />
+      <TopRated theme={theme} setTheme={setTheme} />
+      <RecentlyAdded theme={theme} setTheme={setTheme} />
+      <GenreSection theme={theme} setTheme={setTheme} />
+      <About theme={theme} setTheme={setTheme} />
+      <Contact theme={theme} setTheme={setTheme} />
     </div>
   );
 };

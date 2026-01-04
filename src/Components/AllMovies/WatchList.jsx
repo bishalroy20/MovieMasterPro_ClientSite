@@ -39,35 +39,51 @@ export default function WatchList() {
     );
 
   return (
-    <div className="max-w-5xl mx-auto mt-10 text-white">
-      <h1 className="text-3xl font-bold mb-6">My Watchlist</h1>
+    <div className="max-w-7xl mx-auto mt-10 px-4 text-white">
+      <h1 className="text-3xl font-bold mb-8 text-center text-gray-500">🎬 My Watchlist</h1>
 
       {watchlist.length === 0 ? (
-        <p>No movies added yet.</p>
+        <p className="text-center text-gray-400">No movies added yet.</p>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {watchlist.map((item) => (
-            <div key={item._id} className="bg-gray-800 p-4 rounded shadow">
+            <div
+              key={item._id}
+              className="bg-gray-800 rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition duration-300 flex flex-col"
+            >
               <img
-                src={item.movie.posterUrl}
-                className="w-full h-60 object-cover rounded"
+                src={
+                  item.movie.posterUrl ||
+                  "https://via.placeholder.com/300x400?text=No+Image"
+                }
+                alt={item.movie.title}
+                className="w-full h-64 object-cover"
               />
 
-              <h2 className="text-lg font-bold mt-2">{item.movie.title}</h2>
+              <div className="p-4 flex flex-col flex-grow">
+                <h2 className="text-lg font-bold mb-2 line-clamp-1">
+                  {item.movie.title}
+                </h2>
+                <p className="text-sm text-gray-400 mb-4 line-clamp-2">
+                  {item.movie.plotSummary || "No description available."}
+                </p>
 
-              <Link
-                to={`/movies/${item.movie._id}`}
-                className="inline-block mt-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded text-white font-semibold"
-              >
-                Details
-              </Link>
+                <div className="mt-auto space-y-2">
+                  <Link
+                    to={`/movies/${item.movie._id}`}
+                    className="block w-full text-center px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-md text-white font-semibold transition"
+                  >
+                    Details
+                  </Link>
 
-              <button
-                className="bg-red-600 w-full mt-3 py-1 rounded"
-                onClick={() => handleRemove(item._id)}
-              >
-                Remove
-              </button>
+                  <button
+                    className="block w-full px-4 py-2 bg-red-600 hover:bg-red-700 rounded-md text-white font-semibold transition"
+                    onClick={() => handleRemove(item._id)}
+                  >
+                    Remove
+                  </button>
+                </div>
+              </div>
             </div>
           ))}
         </div>
